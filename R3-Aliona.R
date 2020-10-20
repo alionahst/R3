@@ -13,7 +13,13 @@ for (i in 1:25) {
   points(i, 1, pch = i, col = i, cex = 1.5)
 }
 
-
+jpeg(filename = "firstplot.jpeg", width = 15, height = 6, units = "cm", res = 100)           
+plot(0, 0, xlim = c(0, 26), ylim = c(0.5, 1.5)
+     , ylab = "colors & sign", xlab = "color number", yaxt = "n")
+for (i in 1:25) {
+  points(i, 1, pch = i, col = i, cex = 1.5)
+}
+dev.off()              
 
 
 
@@ -52,10 +58,21 @@ dev.off()
 
 
 #3. Import data from this article: https://peerj.com/articles/328/
+Webcsv <- "https://dfzljdn9uc3pi.cloudfront.net/2014/328/1/Appendix1.csv"
+Data <- read.table(Webcsv, header = T, sep = ",", skip = 2)
+str(Data)
+#Be careful importing the data. Notice that you have to skip two first lines using “skip = 2”13.
+#With these data, using for(), plot graphs to represent the effect of all the numerical variables, from “richness” to “mean_quality” on “yield”. Choose the type of graph that you think better represents this effect for the different species. Create only one pdf with all the graphs inside.
+#To find the best graph for each type of data, a very helpful web is from Data to Viz https://www.data-to-viz.com/.
 
-skip = 2
+plot(Data[-1])
+
+plot(Data$mean_yield ~ Data$richness)
 
 
-
-
+for(i in names(Data[6:12]))
+    {
+  plot(Data$mean_yield ~ Data[[i]], ylab = "Mean yields", xlab = as.character(names(Data[i])))
+       title(main= paste("Mean yield in function of", as.character(names(Data[i]))))
+}
 
